@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace必须是mapper的全限定类名-->
+<mapper namespace="com.wd.mapper.UserMapper">
+
+    <!--配置查询所有-->
+    <!--id属性的取值必须是mapper接口的方法名-->
+    <select id="findAll" resultType="com.wd.entity.User">
+        select * from user
+    </select>
+    
+    <!--保存用户-->
+    <insert id="saveUser" parameterType="com.wd.entity.User">
+        insert into user (username, address, sex, birthday) values (#{username}, #{address}, #{sex}, #{birthday})
+    </insert>
+
+    <!--更新用户-->
+    <update id="updateUser" parameterType="com.wd.entity.User">
+        update user set username = #{username}, address = #{address}, sex = #{sex}, birthday = #{birthday} where id = #{id}
+    </update>
+
+    <!--删除用户-->
+    <delete id="deleteUser" parameterType="java.lang.Integer">
+        delete from user where id = #{id}
+    </delete>
+
+    <!--根据id查询用户信息-->
+    <select id="findById" parameterType="java.lang.Integer" resultType="com.wd.entity.User">
+        select * from user where id = #{id}
+    </select>
+
+    <!--根据名称模糊查询用户信息-->
+    <select id="findByName" parameterType="string" resultType="com.wd.entity.User">
+        select * from user where username like '%${username}%'
+    </select>
+
+    <!-- 获取用户的总记录条数 -->
+    <select id="findTotal" resultType="int">
+        select count(id) from user;
+    </select>
+
+    <!-- 根据queryVo的条件查询用户 -->
+    <select id="findUserByVo" parameterType="com.wd.entity.QueryVo" resultType="com.wd.entity.User">
+        select * from user where username like #{user.username}
+    </select>
+
+</mapper>
